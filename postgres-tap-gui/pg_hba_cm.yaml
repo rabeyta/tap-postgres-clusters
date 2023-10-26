@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pg-tap-gui-hba-configmap
+  namespace: postgres-tap-gui
+  annotations:
+    kapp.k14s.io/change-group: "postgres-tap-gui"
+data:
+  pg_hba.custom.conf: |
+    host all all all md5
+    host all all all scram-sha-256
+    host all all all password
