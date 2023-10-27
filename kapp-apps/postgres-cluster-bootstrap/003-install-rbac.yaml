@@ -1,0 +1,40 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    kapp.k14s.io/change-group: "postgres-installer-rbac"
+    kapp.k14s.io/change-rule.delete-order-0: "delete after deleting postgres-installer"
+  name: postgres-installer-cluster-role
+rules:
+  - apiGroups:
+      - '*'
+    resources:
+      - '*'
+    verbs:
+      - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    kapp.k14s.io/change-group: "postgres-installer-rbac"
+    kapp.k14s.io/change-rule.delete-order-0: "delete after deleting postgres-installer"
+  name: postgres-installer-cluster-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: postgres-installer-cluster-role
+subjects:
+  - kind: ServiceAccount
+    name: postgres-installer-sa
+    namespace: postgres-install
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    kapp.k14s.io/change-group: "postgres-installer-rbac"
+    kapp.k14s.io/change-rule.delete-order-0: "delete after deleting postgres-installer"
+  name: postgres-installer-sa
+  namespace: postgres-install

@@ -1,0 +1,14 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  annotations:
+    kapp.k14s.io/change-group: "tanzu-tap-repo"
+    kapp.k14s.io/change-rule.delete-order: "delete after deleting cert-manager-package"
+  name: tanzu-tap-repository
+  namespace: postgres-install
+spec:
+  fetch:
+    imgpkgBundle:
+      image: harbor.example.com/tap/tap-packages:1.6.3
+      secretRef: 
+        name: registry-credentials
